@@ -65,7 +65,7 @@
             window.player = player;
             window.ui = ui;
             const config = {
-               enableKeyboardPlaybackControls: true,
+              'enableKeyboardPlaybackControls': true,
               'seekBarColors': {
                 base: 'rgba(255,255,255,.2)',
                 buffered: 'rgba(255,255,255,.4)',
@@ -75,6 +75,10 @@
                     base: 'rgba(255, 255, 255, 0.3)',
                     level: 'rgb(230, 92, 73)',
                   },
+              'keyShortcuts': {
+                    key: 'space',
+                    control: 'pause'
+              }
             }
             ui.configure(config);
             player.configure({
