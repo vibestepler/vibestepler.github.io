@@ -121,6 +121,15 @@
                         }
                     }
                 }
+
+                else if (e.key == "m") {
+                    if (video.muted = false) {
+                        video.muted = true ;
+                    } else {
+                        video.muted = false;
+                    }
+                    e.preventDefault();
+                }
             });
 
             player.addEventListener('error', onPlayerErrorEvent);
