@@ -1,13 +1,52 @@
-<html>
 
+<html>
 <head>
     <meta name="referrer" content="no-referrer" />
-    <title>A-1</title>
+    <title>S-1</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.ui.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/controls.min.css" crossorigin="anonymous" />
 </script>
 <body bgcolor='black' style='margin:0'>
 </script>
+<style>
+   /* Overflow menu style */
+
+.shaka-overflow-menu {
+    background-color: rgb(35, 35, 35);
+    color: rgb(255, 255, 255);
+}
+
+.shaka-overflow-menu button:hover {
+    background-color: rgb(45, 45, 45);
+}
+
+.shaka-overflow-button-label {
+    color: rgb(245, 245, 245);
+}
+
+.shaka-current-selection-span {
+    color: rgb(202, 202, 202);
+}
+
+.material-icons-round {
+    color: rgb(230, 230, 230);
+}
+
+/* Overflow sub menu style */
+
+.shaka-settings-menu {
+    background-color: rgb(35, 35, 35);
+    color: rgb(255, 255, 255);
+}
+
+.shaka-settings-menu button {
+    color: rgb(255, 255, 255);
+}
+
+.shaka-settings-menu button:hover {
+    background-color: rgb(45, 45, 45);
+}
+</style>
 </head>
 
 <body>
@@ -25,13 +64,72 @@
             const player = controls.getPlayer();
             window.player = player;
             window.ui = ui;
+            const config = {
+                 enableKeyboardPlaybackControls: true,
+                'seekBarColors': {
+                 base: 'rgba(255,255,255,.2)',
+                 buffered: 'rgba(255,255,255,.4)',
+                 played: 'rgb(255,0,0)',
+              },
+            };
+            ui.configure(config);
             player.configure({
                 drm: {
                     "clearKeys": {
-                        '03c2e0af2f8159f9f0ce9b5dbc865f10': 'cd84ed136b0cc71f8ab8cd4d4f6a2e4c'
+                        '0003f2a72d21efd159d45a3a74decd84': 'df0ec40586d641f3d4728ab5fd62adc3'
                     }
                 }
             });
+            document.addEventListener('keydown', (e) => {
+            const videoContainer = document.querySelector('video');
+            let is_fullscreen = () => !!document.fullscreenElement
+            let audio_vol = video.volume;
+            if (e.key == 'f') {
+                if (is_fullscreen()) {
+                    document.exitFullscreen();
+                } else {
+                    videoContainer.requestFullscreen();
+                }
+                e.preventDefault();
+                }
+                else if (e.key == ' ') {
+                    if (video.paused) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                    e.preventDefault();
+                }
+                else if (e.key == "ArrowUp") {
+                    e.preventDefault();
+                    if (audio_vol != 1) {
+                        try {
+                            video.volume = audio_vol + 0.05;
+                        }
+                        catch (err) {
+                            video.volume = 1;
+                        }
+                    }
+                }
+                else if (e.key == "ArrowDown") {
+                    e.preventDefault();
+                    if (audio_vol != 0) {
+                        try {
+                            video.volume = audio_vol - 0.05;
+                        }
+                        catch (err) {
+                            video.volume = 0;
+                        }
+                    }
+                }
+
+               else if (e.key == 'm') {
+                    e.preventDefault();
+                    video.muted = !video.muted;
+                }
+                    
+            });
+
             player.addEventListener('error', onPlayerErrorEvent);
             controls.addEventListener('error', onUIErrorEvent);
             try {
