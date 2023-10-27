@@ -124,8 +124,14 @@
 
                 else if (e.key == 'm') {
                     e.preventDefault();
-                    video.muted = true ;  
+                    if (video.muted == true) {
+                        video.muted = false ;
+                    }
+                    else {
+                        
+                        video.muted = true ;  
                 }
+                    
             });
 
             player.addEventListener('error', onPlayerErrorEvent);
