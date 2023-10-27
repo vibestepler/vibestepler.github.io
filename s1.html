@@ -63,26 +63,10 @@
             const player = controls.getPlayer();
             window.player = player;
             window.ui = ui;
-            
-            // Get a reference to the video element created by Shaka Player
-            const videoElement = document.querySelector('video');
-            
-            // Add a keydown event listener to the document
-            document.addEventListener('keydown', (event) => {
-              if (event.key === 'Space' && event.target === document.body) {
-                // Check if the Space key is pressed and the event target is the document body
-                event.preventDefault(); // Prevent the default behavior of scrolling the page
-                if (videoElement.paused) {
-                  videoElement.play(); // If the video is paused, play it
-                } else {
-                  videoElement.pause(); // If the video is playing, pause it
-                }
-              }
-            });
-
             const config = {
-              enableKeyboardPlaybackControls: true,
-              'seekBarColors': {
+                
+            enableKeyboardPlaybackControls: true,
+            'seekBarColors': {
                 base: 'rgba(255,255,255,.2)',
                 buffered: 'rgba(255,255,255,.4)',
                 played: 'rgb(255,0,0)',
