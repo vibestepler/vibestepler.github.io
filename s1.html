@@ -122,13 +122,9 @@
                     }
                 }
 
-                else if (e.key == "m") {
-                    if (video.muted = false) {
-                        video.muted = true ;
-                    } else {
-                        video.muted = false;
-                    }
+                else if (e.key == 'm') {
                     e.preventDefault();
+                    video.muted = true ;  
                 }
             });
 
