@@ -60,9 +60,6 @@
         async function init() {
             const video = document.getElementById('video');
             const ui = video['ui'];
-            const player = controls.getPlayer();
-            window.player = player;
-            window.ui = ui;
             const config = {
                  enableKeyboardPlaybackControls: true,
                 'seekBarColors': {
@@ -71,8 +68,14 @@
                  played: 'rgb(255,0,0)',
               },
             };
+
             ui.configure(config);
             const controls = ui.getControls();
+            const player = controls.getPlayer();
+            window.player = player;
+            window.ui = ui;
+            
+            
             player.configure({
                 drm: {
                     "clearKeys": {
