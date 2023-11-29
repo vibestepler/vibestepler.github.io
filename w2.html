@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vidstack/styles/defaults.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vidstack/styles/community-skin/video.min.css" />
+  <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/vidstack/dist/cdn/prod.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+    /* Add a black background to the body */
+    body {
+      background-color: black;
+      margin: 0; /* Reset default margin */
+      padding: 0;
+      overflow: hidden;/* Reset default padding */
+    }
+  </style>
+</head>
+<body>
+
+
+  <!-- "LIVE" indicator element -->
+    <media-player playsinline
+    title="WWE NETWORK"
+    src="https://tvembed.xyz/proxy.m3u8?id=376"
+    poster="https://image.mux.com/VZtzUzGRv02OhRnZCxcNg49OilvolTqdnFLEqBsTwaxU/thumbnail.webp?time=268&width=980"
+    thumbnails=""
+    aspect-ratio="16/9"
+    crossorigin
+  >
+    <media-outlet>
+      <media-poster alt="Girl walks into sprite gnomes around her friend on a campfire in danger!"></media-poster>
+      <track src="" label="English" srclang="en-US" kind="subtitles" default></track>
+      <track src="" srclang="en-US" kind="chapters" default></track>
+    </media-outlet>
+    <media-community-skin>
+      <!-- Add custom controls -->
+    </media-community-skin>
+  </media-player>
+
+  <script type="module">
+    import 'vidstack/icons';
+
+    // Get the player element
+    const player = document.querySelector('media-player');
+
+    // Get the fast forward button element
+    const fastForwardButton = document.getElementById('fastForwardButton');
+
+    // Add event listener to the fast forward button
+    fastForwardButton.addEventListener('click', () => {
+      // Set the desired fast forward duration in seconds
+      const fastForwardDuration = 10;
+
+      // Calculate the new time by adding the fast forward duration to the current time
+      const newTime = player.currentTime + fastForwardDuration;
+
+      // Seek to the new time
+      player.currentTime = newTime;
+    });
+  </script>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
