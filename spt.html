@@ -1,161 +1,70 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta name="referrer" content="no-referrer" />
-    <title>W-1</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.ui.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/controls.min.css" crossorigin="anonymous" />
-</script>
-<body bgcolor='black' style='margin:0'>
-</script>
-<style>
-   /* Overflow menu style */
-
-.shaka-overflow-menu {
-    background-color: rgb(35, 35, 35);
-    color: rgb(255, 255, 255);
-}
-
-.shaka-overflow-menu button:hover {
-    background-color: rgb(45, 45, 45);
-}
-
-.shaka-overflow-button-label {
-    color: rgb(245, 245, 245);
-}
-
-.shaka-current-selection-span {
-    color: rgb(202, 202, 202);
-}
-
-.material-icons-round {
-    color: rgb(230, 230, 230);
-}
-
-/* Overflow sub menu style */
-
-.shaka-settings-menu {
-    background-color: rgb(35, 35, 35);
-    color: rgb(255, 255, 255);
-}
-
-.shaka-settings-menu button {
-    color: rgb(255, 255, 255);
-}
-
-.shaka-settings-menu button:hover {
-    background-color: rgb(45, 45, 45);
-}
-</style>
+  <meta name="referrer" content="no-referrer" />
+  <title>SPT</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vidstack/styles/defaults.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vidstack/styles/community-skin/video.min.css" />
+  <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/vidstack/dist/cdn/prod.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+    /* Add a black background to the body */
+    body {
+      background-color: black;
+      margin: 0; /* Reset default margin */
+      padding: 0;
+      overflow: hidden;/* Reset default padding */
+    }
+  </style>
 </head>
-
 <body>
-    <center>
-            <div data-shaka-player-container style='width: 100%; height: 100%'>
-            <video autoplay data-shaka-player id='video' style='width:100%;height:100%;'></video>
-        </div>
-    </center>
-    <script>
-        const manifestUri = "http://112.196.61.212:9292/STAR_MOVIES_FHD_VIDECON/index.m3u8";
-        async function init() {
-            const video = document.getElementById('video');
-            const ui = video['ui'];
-            const controls = ui.getControls();
-            const player = controls.getPlayer();
-            window.player = player;
-            window.ui = ui;
-            const config = {
-                 enableKeyboardPlaybackControls: true,
-                'seekBarColors': {
-                 base: 'rgba(255,255,255,.2)',
-                 buffered: 'rgba(255,255,255,.4)',
-                 played: 'rgb(255,0,0)',
-              },
-            };
-            ui.configure(config);
-            player.configure({
-                drm: {
-                    "clearKeys": {
-                        '': ''
-                    }
-                }
-            });
-            document.addEventListener('keydown', (e) => {
-            const videoContainer = document.querySelector('video');
-            let is_fullscreen = () => !!document.fullscreenElement
-            let audio_vol = video.volume;
-            if (e.key == 'f') {
-                if (is_fullscreen()) {
-                    document.exitFullscreen();
-                } else {
-                    videoContainer.requestFullscreen();
-                }
-                e.preventDefault();
-                }
-                else if (e.key == ' ') {
-                    if (video.paused) {
-                        video.play();
-                    } else {
-                        video.pause();
-                    }
-                    e.preventDefault();
-                }
-                else if (e.key == "ArrowUp") {
-                    e.preventDefault();
-                    if (audio_vol != 1) {
-                        try {
-                            video.volume = audio_vol + 0.05;
-                        }
-                        catch (err) {
-                            video.volume = 1;
-                        }
-                    }
-                }
-                else if (e.key == "ArrowDown") {
-                    e.preventDefault();
-                    if (audio_vol != 0) {
-                        try {
-                            video.volume = audio_vol - 0.05;
-                        }
-                        catch (err) {
-                            video.volume = 0;
-                        }
-                    }
-                }
 
-               else if (e.key == 'm') {
-                    e.preventDefault();
-                    video.muted = !video.muted;
-                }
-                    
-            });
+    <media-player 
+      playsinline="true"
+      stream-type="live"
+      title="STAR MOVIES"
+      autoplay="true"
+      src="http://112.196.61.212:9292/STAR_MOVIES_FHD_VIDECON/index.m3u8"
+      poster="https://cdn.statically.io/gh/vibestepler/picx-images-hosting@master/wwetumb.6uxu7tpmu4g0.webp?time=268&width=980"
+      thumbnails=""
+      aspect-ratio="16/9"
+      crossorigin="true" />
 
-            player.addEventListener('error', onPlayerErrorEvent);
-            controls.addEventListener('error', onUIErrorEvent);
-            try {
-                await player.load(manifestUri);
-                console.log('The video has now been loaded!');
-            } catch (error) {
-                onPlayerError(error);
-        }}
+      
+    <media-outlet>
+      <media-poster alt="Girl walks into sprite gnomes around her friend on a campfire in danger!"></media-poster>
+      <track src="" label="English" srclang="en-US" kind="subtitles" default></track>
+      <track src="" srclang="en-US" kind="chapters" default></track>
+    </media-outlet>
+    <media-community-skin>
+      <!-- Add custom controls -->
+    </media-community-skin>
 
-        function onPlayerErrorEvent(errorEvent) {
-            onPlayerError(event.detail);
-        }
+  <script type="module">
+    import 'vidstack/icons';  
+    import { LiveButton } from '@vidstack/react';
 
-        function onPlayerError(error) {
-            console.error('Error code', error.code, 'object', error);
-        }
+    // Get the player element
+    const player = document.querySelector('media-player');
 
-        function onUIErrorEvent(errorEvent) {
-            onPlayerError(event.detail);
-        }
+    // Get the fast forward button element
+    const fastForwardButton = document.getElementById('fastForwardButton');
 
-        function initFailed(errorEvent) {
-            console.error('Unable to load the UI library!');
-        }
-        document.addEventListener('shaka-ui-loaded', init);
-        document.addEventListener('shaka-ui-load-failed', initFailed);
-    </script>
+    // Add event listener to the fast forward button
+    fastForwardButton.addEventListener('click', () => {
+      // Set the desired fast forward duration in seconds
+      const fastForwardDuration = 10;
+
+      // Calculate the new time by adding the fast forward duration to the current time
+      const newTime = player.currentTime + fastForwardDuration;
+
+      // Seek to the new time
+      player.currentTime = newTime;
+    });
+  </script>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
-
 </html>
